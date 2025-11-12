@@ -1,1 +1,106 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title> Raiyan Engineering </title>
+        <link rel="stylesheet" href="styles.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link rel="images" href="https://www.pexels.com/search/workplace/">
+    </head>
+    <style>
+        body {
+            padding: 0;
+            margin: 0;
+        }
+        .carousel {
+            border: 0px solid black;
+            height: 450px;
+            text-align: center;
+            display: flex;
+            transition: transform 0.3s ease-in-out;
+            justify-content: center;
+            color: aliceblue;
+        }
+        .carousel .slide h1 {
+            padding-top: 25%;
+            color: #ffffff;
+        }
+        .slide {
+            display: none;
+            background-size: cover;
+        }
+        .slide.active {
+            display: block;
+        } 
+        .dots {
+            position: absolute;
+            /*border: 2px solid black;*/
+            padding: 5px;
+            display: flex;
+            height: 20px;
+            width: 100%;
+            gap: 20px;
+            justify-content: center;
+            transform: translateY(350px);
+        }
+        .dots .dot {
+            border: 9px solid grey;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+        .dots .dot.active {
+            transform: translateY(-50%);
+            border: 16px solid orange;
+            transition: transform 0.3s ease-in-out;
+        }
+        nav a {
+            color: black;
+            font-size: larger;
+        }
+    </style>
+    <body>
+        <header>
+            <nav>
+                    <a href="https://wa.me/+880-182-471-6600"><i class="fa fa-whatsapp" aria-hidden="true"></i></a>
+                    <a href=""></a>
+                    <a href=""></a>
+            </nav>
+        </header>
+        <div class="carousel">
+            <div class="slide active" style="background-image: url('pexels-fauxels-3183150.jpg'); height: 100%; width: 100%;">
+                <h1>Welcome to Raiyan Engineering</h1>
+                <h2>
+                    Where customer connects with wise potential with higher quality
+                </h2>
+                <button onclick="start">Get Started</button>
+            </div>
+            <div class="slide">
+                <h1>Welcome to Raiyan Engineering</h1>
+                <h2>
+                    Where customer connects with wise potential with higher quality
+                </h2>
+                <button onclick="start">Get Started</button>
+            </div>
+            <div class="slide">
+                <h1>Welcome to Raiyan Engineering</h1>
+                <h2>
+                    Where customer connects with wise potential with higher quality
+                </h2>
+                <button onclick="start">Get Started</button>
+            </div>
+            <div class="dots">
+                <div class="dot active">
 
+                </div>
+                <div class="dot">
+
+                </div>
+                <div class="dot">
+
+                </div> 
+            </div>
+        </div>
+        <!--<footer>
+            <p>&copy; 2023 Raiyan Engineering</p>
+        </footer>-->
+    </body>
+</html>
