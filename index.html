@@ -3,36 +3,137 @@
     <head>
         <title> Raiyan Engineering </title>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-        <link rel="images" href="https://www.pexels.com/search/workplace/">
     </head>
     <style>
         body {
             padding: 0;
             margin: 0;
         }
+        nav {
+            border: 2px solid rgba(151, 135, 135, 0.043);
+            backdrop-filter: brightness(20%);
+            padding: 4px 0px 4px 0px;
+            display: flex;
+            justify-content: flex-end;
+            top: 0;
+            left: 0%;
+            z-index: 1000;
+            width: 100%;
+            position: fixed;
+            gap: 20px;
+        }
+        /*nav:hover {
+            transform: scale(3);
+            transition: transform 0.3s ease;
+        }*/
+        nav img {
+            right: 0%;
+            z-index: 1;
+        }
+        nav i {
+            color: white;
+            margin: 4px 6.5px 4px 4.5px;
+            font-size: 8%;
+            left: 20px;
+        }
+        nav i:hover {
+            transform: scale(2);
+            transition: transform 0.1s ease-in-out;
+        }
+        nav a {
+            color: white;
+            text-decoration: none;
+        }
         .carousel {
+            border: 0px solid black;
+        }
+        .slides {
             border: 0px solid black;
             height: 450px;
             text-align: center;
             display: flex;
-            transition: transform 0.3s ease-in-out;
             justify-content: center;
             color: aliceblue;
             overflow: hidden;
             flex: 0 0 100%;
+            background-color: white;
         }
-        .carousel .slide h1 {
-            padding-top: 25%;
-            color: #ffffff;
+        /*.slide h1 {
+            padding-top: 15%;
+            color: white;
             font-size: 30px;
-        }
+            position: center;
+        }*/
         .slide {
-            display: none;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: aliceblue;
+            padding: 0 20px;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-position: center;
             background-size: cover;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
         }
         .slide.active {
-            display: block;
+            opacity: 1;
+            z-index: 1;
         } 
+        .slide h1, .slide h2 {
+            opacity: 0;
+            transform: translateY(10px);
+            transition: opacity 1s ease, transform 1s ease;
+            text-shadow: 1px 1px 6px rgb(28, 14, 14);
+        }
+        .slide.active h1, .slide.active h2 {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .slide .icons {
+            opacity: 0;
+            transition: opacity 1s ease, transform 1s ease;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            transform: translateY(10px);
+        }
+        .slide.active .icons {
+            opacity: 1;
+            transform: translateY(0px);
+        }
+        .slide a {
+            text-decoration: none;
+            display: inline-block;
+        }
+        .slide i {
+            color: rgb(0, 0, 0);
+            text-shadow: rgba(255, 255, 255, 0.466);
+            font-size: 30px;
+            display: flex;
+            cursor: pointer;
+        }
+        .slide i:hover {
+            transform: scale(1.25);
+            transition: transform 0.3s ease;
+        }
+        .slide button {
+            transform: scale(2);
+            color: rgb(255, 255, 255);
+            background-color: rgb(59, 115, 164);
+            border-radius: 24px;
+        }
+        .slide button:hover {
+            transform: scale(2.50);
+            transition: transform 0.3s ease;
+        }
         .dots {
             position: absolute;
             /*border: 2px solid black;*/
@@ -42,7 +143,7 @@
             width: 100%;
             gap: 20px;
             justify-content: center;
-            transform: translateY(350px);
+            transform: translateY(50px);
         }
         .dots .dot {
             border: 9px solid grey;
@@ -54,74 +155,232 @@
             border: 16px solid orange;
             transition: transform 0.3s ease-in-out;
         }
-        nav a {
-            color: black;
-            font-size: larger;
+        .prev, .next {
+            top: 50%;
+            position: absolute;
+            text-decoration: none;
+            background-color: rgba(88, 81, 81, 0.336);
+            border: none;
+            cursor: pointer;
+            z-index: 10;
+            border-radius: 50%;
+        }
+        .prev i, .next i {
+            border: none
+            border-radius: 50%;
+            top: 0;
+            font-size: 24px;
+            color: white;
+        }
+        .prev:hover, .next:hover {
+            transform: scale(2);
+            background-color: black;
+            transition: background-color 0.3s ease-in-out;
+        }
+        .prev {
+            left: 2%;
+        }
+        .next {
+            right: 2%;
+        }
+        form {
+            border: 0px solid black;
+            transform: translateY(250px);
+            padding: 10px;
+            margin-bottom: 100px;
+            width: 80%;
+            perspective: center;
+            margin-left: 10%;
+        }
+        form h2 {
+            text-align: center;
+            font-size: 35px;
+            margin-bottom: 65px;
+        }
+        input {
+            border: 3px solid rgb(59, 115, 164);
+            border-radius: 24px;
+            padding: 5px 7px 5px 7px;
+        }
+        label b {
+            font-size: 19px;
+        }
+        input[type="text"] {
+            width: 100%;
+            height: 300px;
+        }
+        input[type="button"] {
+            background-color: rgb(59, 115, 164);
+            color: aliceblue;
+            font-size: 18px;
+            right: 20%;
+            text-align: center;
+            cursor: pointer;
+            border: none;
+        }
+        input[type="submit"] {
+            right: 20%;
+            font-size: 20px;
+            background-color: rgb(59, 115, 164);
+            color: aliceblue;
+            cursor: pointer;
+        }
+        .removeOrderBtn {
+            font-size: 18px;
+            cursor: pointer;
+            background-color: rgb(59, 115, 164);
+            color: aliceblue;
+            border-radius: 24px;
+            border: none;
+            text-decoration: none;
+            padding: 5px 7px 5px 7px;
         }
     </style>
     <body>
         <header>
             <nav>
-                    <a href="https://wa.me/+880-182-471-6600"><i class="fa fa-whatsapp" aria-hidden="true"></i></a>
-                    <a href="tel:+880-182-471-6600"><i class="fa fa-phone" aria-hidden="true"></i></a>
-                    <a href="mailto:naimul45@gmail.com"><i class="fa fa-envelope" aria-hidden="true"></i></a>
+                <img src="" alt="Raiyan Engineering">
+                    <a href=""><i class="fa fa-whatsapp" aria-hidden="true"></i></a>
+                    <a href=""><i class="fa fa-phone" aria-hidden="true"></i></a>
+                    <a href=""><i class="fa fa-envelope" aria-hidden="true"></i></a>
+                    <a href=""><i class="fa fa-list-alt" aria-hidden="true"></i></a>
+                    <a href=""><i class="fa fa-comments-o" aria-hidden="true"></i></i></a>
+                    <a href=""><i class="fa fa-user-circle" aria-hidden="true"></i></a>
             </nav>
         </header>
         <div class="carousel">
+            <div class="slides">
             <div class="slide active" style="background-image: url('pexels-fauxels-3183150.jpg'); height: 100%; width: 100%;">
                 <h1>Welcome to Raiyan Engineering</h1>
                 <h2>
                     Where customer connects with wise potential with higher quality
                 </h2>
-                <button onclick="start">Get Started</button>
+                <button class="start">Get Started</button>
             </div>
             <div class="slide" style="background-image: url('Quotations\ \(1\).jpg'); height: 100%; width: 100%;">
-                <h2>We committed <h1>over 30 Quotations</h1>.</h2>
+                <h2>We committed over 30 Quotations.</h2>
             </div>
             <div class="slide" style="background-image: url('contact-us-smilescript.jpg'); height: 100%; width: 100%;">
-                <h1>Come, Negotiate and Get your hightest potential empire.</h1>>
-                <a href="https://wa.me/+880-182-471-6600"><i class="fa fa-whatsapp" aria-hidden="true"></i></a>
-                <a href="tel:+880-182-471-6600"><i class="fa fa-phone" aria-hidden="true"></i></a>
-                <a href="mailto:naimul45@gmail.com"><i class="fa fa-envelope" aria-hidden="true"></i></a>
+                <h2>Come, Negotiate and Get your hightest potential empire.</h2>
+                <div class="icons">
+                <a href=""><i class="fa fa-whatsapp" aria-hidden="true"></i></a>
+                <a href=""><i class="fa fa-phone" aria-hidden="true"></i></a>
+                <a href=""><i class="fa fa-envelope" aria-hidden="true"></i></a>
+                </div>
             </div>
+            </div>
+            <button class="prev" aria-label="Previous slide"><i class="fa fa-angle-left" aria-hidden="true"></i></button>
+            <button class="next" aria-label="Next slide"><i class="fa fa-angle-right" aria-hidden="true"></i></button>
             <div class="dots">
-                <div class="dot">
-
-                </div>
-                <div class="dot active">
-
-                </div>
-                <div class="dot">
-
-                </div> 
+                <div class="dot active"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
             </div>
         </div>
+        <!--Order Form-->
+        <form id="pdfForm">
+            <h2>Enter your Order: </h2>
+            
+            <div id="ordersContainer">
+                <div class="order-entry">
+                    <label for="serial"><b>Order No: </b></label><br><br>
+
+                    <label for="date"><b>Date: </b></label>
+                    <input type="date" id="date"><br><br>
+
+                    <label for="location"><b>Your Location: </b></label>
+                    <input type="text" id="location" placeholder="Where do you want it to deliver?"><br><br>
+
+                    <label for="order"><b>Your Order: </b></label>
+                    <input type="text" id="order" placeholder="Describe of items/works..."><br><br>
+
+                    <label for="quantity"><b>Select Quantity: </b></label>
+                    <input type="number" id="quantity" name="quantity" min="1" max="50" value="1"><br><br>
+                </div>
+            </div>
+
+            <input type="button" id="add" value="+Add Order"><br><br>
+            <input type="submit" value="Submit">
+        </form>
         <!--<footer>
             <p>&copy; 2023 Raiyan Engineering</p>
         </footer>-->
         <script>
-            const carousel = document.querySelector('.carousel');
-            const slide = document.querySelectorAll('.slide');
-            const dots = document.querySelectorAll('.dot');
+            document.addEventListener('DOMContentLoaded', () => {
+                const slidesContainer = document.querySelector('.slides');
+                const slides = document.querySelectorAll('.slide');
+                const dots = document.querySelectorAll('.dot');
+                const prevBtn = document.querySelector('.prev');
+                const nextBtn = document.querySelector('.next');
+                const ordersContainer = document.getElementById('ordersContainer');
+                const addOrderBtn = document.getElementById('add');
 
-            let currentIndex = 0;
+                let currentIndex = 0;
 
-            function showSlide(index) {
-                if (index >= slide.length) currentIndex = 0;
-                else if (index < 0) currentIndex = slide.length - 1;
-                else currentIndex = index;
+                function showSlide(index) {
+                    slides.forEach((slide, i) => {
+                        slide.classList.toggle('active', i === index);
+                    });
+                    dots.forEach((dot, i) => {
+                        dot.classList.toggle('active', i === index);
+                    });
+                }
 
-                carousel.style.transform = `translateX(-${currentIndex * 100}%)`;
+                function prevSlide() {
+                    currentIndex = (currentIndex - 1 + slides.length)  % slides.length;
+                    showSlide(currentIndex);
+                }
 
-                dots.forEach(dot => dot.classList.remove('active'));
-                dots[currentIndex].classList.add('active');
-            }
+                function nextSlide() {
+                    currentIndex = (currentIndex + 1) % slides.length;
+                    showSlide(currentIndex);
+                }
+                
+                prevBtn.addEventListener('click', prevSlide);
+                nextBtn.addEventListener('click', nextSlide);
 
-            dots.forEach((dot, i) => {
-                dot.addEventListener('click', () => showSlide(i));
+                dots.forEach((dot, index) => {
+                    dot.addEventListener('click', () => {
+                        currentIndex = index;
+                        showSlide(currentIndex);
+                    });
+                });
+
+                setInterval(nextSlide, 5000);
+
+                document.addEventListener('keydown', (e) => {
+                    if (e.key === 'Arrowleft') prevSlide();
+                    if (e.key === 'ArrowRight') nextSlide();
+                });
+
+                addOrderBtn.addEventListener('click', () => {
+                    const newOrder = document.createElement('div');
+                    newOrder.classList.add('.order-entry');
+                    newOrder.innerHTML = `
+                    <hr>
+                    <label><b>Order No: </b><label><br><br>
+
+                    <label><b>Date: </b></label>
+                    <input type="date" name="date"><br><br>
+
+                    <label><b>Your Location: </b></label>
+                    <input type="text" name="location" placeholder="Where do want it to deliver?"><br><br>
+                    
+                    <label><b>Your Order: </b></label>
+                    <input type="text" name="order" placeholder="Describe items/works..."><br><br>
+
+                    <label><b>Quality: </b></label>
+                    <input type="number" name="quantity" min="1" max="50" value="1"><br><br>
+
+                    <button type="button" class="removeOrderBtn">Remove</button><br><br>
+                    `;
+                    ordersContainer.appendChild(newOrder);
+
+                    newOrder.querySelector('.removeOrderBtn').addEventListener('click', () => {
+                        newOrder.remove();
+                    });
+                });
             });
-
-            //setInterval(() => showSlide(currentIndex + 1), 1000);
         </script>
     </body>
 </html>
