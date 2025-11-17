@@ -3,6 +3,7 @@
     <head>
         <title> Raiyan Engineering </title>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     </head>
     <style>
         body {
@@ -218,12 +219,14 @@
             cursor: pointer;
             border: none;
         }
-        input[type="submit"] {
+        #pdfForm button {
             right: 20%;
             font-size: 20px;
             background-color: rgb(59, 115, 164);
             color: aliceblue;
             cursor: pointer;
+            text-decoration: none;
+            border-radius: 24px;
         }
         .removeOrderBtn {
             font-size: 18px;
@@ -283,10 +286,13 @@
             
             <div id="ordersContainer">
                 <div class="order-entry">
-                    <label for="serial"><b>Order No: </b></label><br><br>
+                    <label for="serial"><b>Order No: 1</b></label><br><br>
 
                     <label for="date"><b>Date: </b></label>
                     <input type="date" id="date"><br><br>
+
+                    <label for="orderName"><b>Order Name: </b></label>
+                    <input type="text" id="orderName" placeholder="Please write your order name in brief..."><br><br>
 
                     <label for="location"><b>Your Location: </b></label>
                     <input type="text" id="location" placeholder="Where do you want it to deliver?"><br><br>
@@ -300,7 +306,7 @@
             </div>
 
             <input type="button" id="add" value="+Add Order"><br><br>
-            <input type="submit" value="Submit">
+            <button type="button" onclick="generatePDF()">Submit</button>
         </form>
         <!--<footer>
             <p>&copy; 2023 Raiyan Engineering</p>
@@ -353,15 +359,22 @@
                     if (e.key === 'ArrowRight') nextSlide();
                 });
 
+                let orderCount = 1;
                 addOrderBtn.addEventListener('click', () => {
+                    orderCount++;
+
                     const newOrder = document.createElement('div');
-                    newOrder.classList.add('.order-entry');
+                    newOrder.classList.add('order-entry');
+
                     newOrder.innerHTML = `
                     <hr>
-                    <label><b>Order No: </b><label><br><br>
+                    <label><b>Order No: ${orderCount}</b><label><br><br>
 
                     <label><b>Date: </b></label>
                     <input type="date" name="date"><br><br>
+
+                    <label><b>Order Name: </b></label>
+                    <input type="text" name="orderName" placeholder="Please write here your order name in brief..."><br><br>
 
                     <label><b>Your Location: </b></label>
                     <input type="text" name="location" placeholder="Where do want it to deliver?"><br><br>
@@ -381,6 +394,41 @@
                     });
                 });
             });
+            async function generatePDF() {
+                    const { jsPDF } = window.jspdf;
+                    const doc = new jsPDF();
+
+                    let orderCount = document.querySelectorAll('.order-entry').length;
+                    const orders = document.querySelectorAll('.order-entry');
+                    
+                    const date = document.getElementById('date').value;
+                    const orderName = document.getElementById('orderName').value;
+                    const location = document.getElementById('location').value;
+                    const order = document.getElementById('order').value;
+                    const quantity = document.getElementById('quantity').value;
+
+                    doc.setFontSize(12);
+                    doc.text("Quotation", 100, 30);
+
+                    doc.setFontSize(8);
+                    doc.text("Ref: RAIYAN-2025-Q124", 20, 35);
+                    doc.text("To:  General Manager", 20, 45);
+                    doc.text("CP Bangladesh Co. Ltd.", 30, 50);
+                    doc.text(`C/O: ${location}`, 20, 55);
+                    doc.text(`Subject: Quotation for ${orderName} Supply.`, 20, 65);
+                    doc.text("Hey, Service Seller!", 20, 75);
+                    doc.text(`Here's my ${orderCount+1} order to you. Eagarly waiting for your charming response.`, 20, 80);
+                    doc.text(`Date: ${date}`, 160, 35);
+                    doc.text(`Vendor: 820304`, 165, 40);
+
+                    /*doc.setFontSize(12);
+                    doc.text(`Date: ${date}`, 20, 40);
+                    doc.text(`Location: ${location}`, 20,50);
+                    doc.text(`Order: ${order}`, 20, 60);
+                    doc.text(`Quantity: ${quantity}`, 20,70);*/
+
+                    doc.save(`Quatation${date}.pdf`);
+                }
         </script>
     </body>
 </html>
