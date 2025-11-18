@@ -4,6 +4,7 @@
         <title> Raiyan Engineering </title>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/emailjs.min.js"></script>
     </head>
     <style>
         body {
@@ -186,7 +187,7 @@
         }
         form {
             border: 0px solid black;
-            transform: translateY(250px);
+            transform: translateY(275px);
             padding: 10px;
             margin-bottom: 100px;
             width: 80%;
@@ -238,11 +239,17 @@
             text-decoration: none;
             padding: 5px 7px 5px 7px;
         }
-        //Responsive for mobile
-        @media screen(width: 480px) {
-            #pdfForm {
-                margin-top: 80%;
-            }
+        
+        @media (width: 430px) and (height: 932px) {
+          .carousel {
+            padding-bottom: 20%;
+          }
+          .slide {
+            background-position: center !important;
+            background-size: cover !important;
+            background-repeat: repeat !important;
+            height: 300px !important;
+          }
         }
     </style>
     <body>
@@ -260,7 +267,7 @@
         <div class="carousel">
             <div class="slides">
             <div class="slide active" style="background-image: url('pexels-fauxels-3183150.jpg'); height: 100%; width: 100%;">
-                <h1>Welcome to Raiyan Engineering</h1>
+                <h1>Welcome to Raiyan Engineering BD</h1>
                 <h2>
                     Where customer connects with wise potential with higher quality
                 </h2>
@@ -292,13 +299,16 @@
             
             <div id="ordersContainer">
                 <div class="order-entry">
-                    <label for="serial"><b>Order No: 1</b></label><br><br>
-
                     <label for="date"><b>Date: </b></label>
-                    <input type="date" id="date"><br><br>
+                    <input type="date" id="date" readonly><br><br>
 
-                    <label for="orderName"><b>Order Name: </b></label>
-                    <input type="text" id="orderName" placeholder="Please write your order name in brief..."><br><br>
+                    <label for="orderName"><b>Item List: </b></label>
+                    <input type="text" id="orderName" placeholder="Please write your order list in brief..."><br><br>
+
+                    <label for="serial"><b>Item No: 1</b></label><br><br>
+
+                    <label for="companyName"><b>Your Company Name: </b></label>
+                    <input type="text" id="companyName" placeholder="Please write your company name..."><br><br>
 
                     <label for="location"><b>Your Location: </b></label>
                     <input type="text" id="location" placeholder="Where do you want it to deliver?"><br><br>
@@ -326,6 +336,11 @@
                 const nextBtn = document.querySelector('.next');
                 const ordersContainer = document.getElementById('ordersContainer');
                 const addOrderBtn = document.getElementById('add');
+
+                const dateInput = document.getElementById('date');
+                    const today = new Date().toISOString().split('T')[0];
+                    dateInput.value = today;
+                    dateInput.readOnly = true;
 
                 let currentIndex = 0;
 
@@ -374,16 +389,7 @@
 
                     newOrder.innerHTML = `
                     <hr>
-                    <label><b>Order No: ${orderCount}</b><label><br><br>
-
-                    <label><b>Date: </b></label>
-                    <input type="date" name="date"><br><br>
-
-                    <label><b>Order Name: </b></label>
-                    <input type="text" name="orderName" placeholder="Please write here your order name in brief..."><br><br>
-
-                    <label><b>Your Location: </b></label>
-                    <input type="text" name="location" placeholder="Where do want it to deliver?"><br><br>
+                    <label><b>Item No: ${orderCount}</b><label><br><br>
                     
                     <label><b>Your Order: </b></label>
                     <input type="text" name="order" placeholder="Describe items/works..."><br><br>
@@ -406,8 +412,9 @@
 
                     let orderCount = document.querySelectorAll('.order-entry').length;
                     const orders = document.querySelectorAll('.order-entry');
-                    
+
                     const date = document.getElementById('date').value;
+                    const companyName = document.getElementById('companyName').value;
                     const orderName = document.getElementById('orderName').value;
                     const location = document.getElementById('location').value;
                     const order = document.getElementById('order').value;
@@ -417,23 +424,59 @@
                     doc.text("Quotation", 100, 30);
 
                     doc.setFontSize(8);
-                    doc.text("Ref: RAIYAN-2025-Q124", 20, 35);
+                    //doc.text(`Ref: RAIYAN-2025-Q${}`, 20, 35);
                     doc.text("To:  General Manager", 20, 45);
-                    doc.text("CP Bangladesh Co. Ltd.", 30, 50);
+                    doc.text(`${companyName}`, 30, 50);
                     doc.text(`C/O: ${location}`, 20, 55);
                     doc.text(`Subject: Quotation for ${orderName} Supply.`, 20, 65);
                     doc.text("Hey, Service Seller!", 20, 75);
-                    doc.text(`Here's my ${orderCount+1} order to you. Eagarly waiting for your charming response.`, 20, 80);
+                    doc.text(`Here's my ${orderCount} order to you. Eagarly waiting for your charming response.`, 20, 80);
                     doc.text(`Date: ${date}`, 160, 35);
                     doc.text(`Vendor: 820304`, 165, 40);
 
-                    /*doc.setFontSize(12);
-                    doc.text(`Date: ${date}`, 20, 40);
-                    doc.text(`Location: ${location}`, 20,50);
-                    doc.text(`Order: ${order}`, 20, 60);
-                    doc.text(`Quantity: ${quantity}`, 20,70);*/
+                    //Table header
+                    let y = 90;
+                    doc.text("SL No.", 20, y);
+                    doc.text("Description of Items/Works", 40, y);
+                    doc.text("Unit", 90, y);
+                    doc.text("Quantity", 100, y);
+                    doc.text("Unit Price (TK)", 120, y);
+                    doc.text("Total Price (TK)", 150, y);
+                    y += 10;
+
+                    doc.setFontSize(10);
+                    let slNo = 1;
+                    orders.forEach(order => {
+                        const orderDesc = order.querySelector('input[name="order"]') ? order.querySelector('input[name="order"]').value : order.querySelector('#order').value;
+                        const quantity = order.querySelector('input[name="quantity"]') ? order.querySelector('input[name="quantity"]').value : order.querySelector('#quantity').value;
+                    
+                    doc.text(`${slNo}`, 20, y);
+                    doc.text(`${orderDesc}`, 40, y);
+                    doc.text(`${quantity}`, 105, y);
+
+                    y += 10;
+                    slNo++;
+                    });
 
                     doc.save(`Quatation${date}.pdf`);
+
+                    // Send via EmailJS
+                    const pdfBlob = doc.output('blob');
+                    const reader = new FileReader();
+                    reader.onload = function() {
+                        const pdfBase64 = reader.result.split(',')[1];
+                        emailjs.send('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', {
+                            to_email: '',
+                            subject: `Quotation PDF ${date}`,
+                            message: 'Please find the attached quotation PDF.',
+                            attachment: pdfBase64 
+                        }, 'YOUR_PUBLIC_KEY').then(() => {
+                            alert('Email sent successfully!');
+                        }).catch((error) => {
+                            console.error('Email send failed: ', error);
+                        });
+                    };
+                    reader.readAsDataURL(pdfBlob);
                 }
         </script>
     </body>
