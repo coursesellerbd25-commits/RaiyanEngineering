@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title> Raiyan Engineering </title>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
@@ -24,10 +25,6 @@
             position: fixed;
             gap: 20px;
         }
-        /*nav:hover {
-            transform: scale(3);
-            transition: transform 0.3s ease;
-        }*/
         nav img {
             right: 0%;
             z-index: 1;
@@ -60,12 +57,6 @@
             flex: 0 0 100%;
             background-color: white;
         }
-        /*.slide h1 {
-            padding-top: 15%;
-            color: white;
-            font-size: 30px;
-            position: center;
-        }*/
         .slide {
             display: flex;
             flex-direction: column;
@@ -188,10 +179,10 @@
         form {
             border: 0px solid black;
             transform: translateY(275px);
-            padding: 10px;
             margin-bottom: 100px;
+            padding: 10px;
             width: 80%;
-            perspective: center;
+            perspective: 1000px;
             margin-left: 10%;
         }
         form h2 {
@@ -240,15 +231,9 @@
             padding: 5px 7px 5px 7px;
         }
         
-        @media (width: 430px) and (height: 932px) {
-          .carousel {
-            padding-bottom: 20%;
-          }
-          .slide {
-            background-position: center !important;
-            background-size: cover !important;
-            background-repeat: repeat !important;
-            height: 300px !important;
+        @media (max-width: 480px) {
+          form {
+                transform: translateY(500px);
           }
         }
     </style>
